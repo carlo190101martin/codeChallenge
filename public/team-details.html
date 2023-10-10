@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Details</title>
+</head>
+<body>
+
+    <h1 id="team-name-header">Team Name</h1>
+    <button id="back-btn">Back</button>
+
+    <ul id="team-members-list">
+    </ul>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Extract teamId from the URL params
+            const urlParams = new URLSearchParams(window.location.search);
+            const teamId = urlParams.get('teamId');
+
+            // Display team details
+            fetchTeamDetails(teamId);
+        });
+
+        async function getCurrentUserId() {
+    try {
+        const response = await fetch('/api/users/current-user');
+        
+        if (!response.ok) {
+            throw new Error('Failed to fetch user ID');
+        }
+        
+        const data = await response.json();
+        console.log('User ID fetched:', data.userId); // Add this
+        console.log('Data fetched:', data);  // Log the entire data object
+        return data.userId;
+    } catch (error) {
+        console.error('Error:', error);
+        return null;
+    }
+}
+
+        async function fetchTeamDetails(teamId) {
+    try {
+        // Fetch team details from the API
+        const response = await fetch(`/api/teams/${teamId}`);
+        const team = await response.json();
+        console.log('Team Details:', team);
+
+        // Set team name
+        document.getElementById('team-name-header').textContent = team.teamName;
+
+        // Fetch and display team member details
+        const membersList = document.getElementById('team-members-list');
+        membersList.innerHTML = '';
+
+        // Fetch all members and store them in an array
+        const membersData = [];
+        const currentUserID = await getCurrentUserId();
+        console.log('Current User ID:', currentUserID);
+
+        for (const memberId of team.members) {
+        console.log('memberId1:', memberId);
+        const memberResponse = await fetch(`/api/users/${memberId}`);
+        const member = await memberResponse.json();
+        member.id = memberId;  // Add this line to ensure member object has id property
+        membersData.push(member);
+}
+
+        // Calculate rank and append member data to list
+        membersData
+            .sort((a, b) => b.score - a.score)  // Sort members based on score
+            .forEach((member, index) => {
+                const listItem = document.createElement('li');
+                const username = member.email.split('@')[0];
+
+                listItem.innerHTML = `Rank: ${index + 1}, <strong>${username}</strong> - Score: ${member.score}`;
+                if (currentUserID === team.owner && member.id !== team.owner) {
+                    const removeButton = document.createElement('button');
+                    removeButton.textContent = 'Remove';
+                    removeButton.addEventListener('click', () => {
+                        console.log(`Removing member with ID: ${member.id} from team ID: ${teamId}`);
+                        removeMemberFromTeam(member.id, teamId);
+                    });
+                    listItem.appendChild(removeButton);
+                }
+
+                membersList.appendChild(listItem);
+            });
+            document.getElementById('back-btn').addEventListener('click', function() {
+                window.location.href = "/dashboard.html";
+
+            
+            });
+    } catch (error) {
+        console.error('Error fetching team details:', error);
+    }
+}
+
+async function removeMemberFromTeam(memberId, teamId) {
+    try {
+        const response = await fetch(`/api/teams/${teamId}/remove-member`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            
+            body: JSON.stringify({ memberId }),  
+        });
+        console.log("Sending memberId: ", memberId);
+
+        if (!response.ok) {
+            throw new Error('Failed to remove member from team');
+            throw new Error('Failed to remove member from team: ' + errorData.error);
+            throw new Error(`Failed to remove member from team: ${errorDetails.error}`);
+        }
+
+        // Refetch and remake team details after a member is removed
+        fetchTeamDetails(teamId);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+
+
+    </script>
+
+</body>
+</html>

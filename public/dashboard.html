@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .dashboard-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            margin-top: 20px;
+        }
+        .table-container {
+        margin-top: 20px; 
+        width: 80%; 
+    }
+    
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .table th, .table td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .table th {
+        background-color: #f2f2f2;
+    }
+
+    .table tbody tr:hover {
+        background-color: #f5f5f5;
+    }
+
+        label,
+        input,
+        button {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="dashboard-content">
+        <h1>Welcome to the Dashboard</h1>
+        <p>You are signed in!</p>
+        <button onclick="handleSignOut()">Sign Out</button>
+
+        <!-- Added form for creating a team -->
+        <h2>Create a Team</h2>
+        <form id="createTeamForm">
+            <label for="teamName">Team Name:</label>
+            <input type="text" id="teamName" name="teamName" required><br><br>
+
+            <label for="maxMembers">Maximum Members:</label>
+            <input type="number" id="maxMembers" name="maxMembers" min="11" required><br><br>
+
+            <button type="submit">Create Team</button>
+        </form>
+        <h3>Change a Team (If you are owner)</h3>
+
+        <form id="updateTeamForm">
+            <label for="teamUpdateId">Current Team Name:</label>
+            <input type="text" id="teamUpdateId" name="teamUpdateId" required><br><br>
+            
+            <label for="updatedTeamName">New Team Name:</label>
+            <input type="text" id="updatedTeamName" name="updatedTeamName" required><br><br>
+        
+            <label for="updatedMaxMembers">New Maximum Members:</label>
+            <input type="number" id="updatedMaxMembers" name="updatedMaxMembers" min="11" required><br><br>
+            <button id="deleteTeamBtn">Delete Team</button>
+            <button type="submit">Update Team</button>
+        </form>
+        <h4>Join a Team</h4>
+        <ul id="teamList">
+            <!-- List items of teams will be appended here dynamically -->
+        </ul>
+        <h4>Teams Information</h4>
+        <ul id="teams-list">
+        </ul>
+    </div>
+    <div class="dashboard-content table-container">
+        <table id="usersTable" class="table">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Score</th>
+                    <th>Team(s)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="loadingRow">
+                    <td colspan="4">Loading...</td>
+                </tr>
+                <!-- User data go here -->
+            </tbody>
+        </table>
+    </div>
+
+    
+
+    <script>
+        async function refreshDataAndUI() {
+            location.reload();
+            document.addEventListener('visibilitychange', function() {
+        
+            addEventListener('pageshow', function(event) {
+            if (event.persisted) {
+            window.location.reload();
+        }
+});
+
+
+});
+        }
+        async function handleSignOut() {
+    try {
+        const response = await fetch('/api/users/signout', {
+            method: 'POST',
+            credentials: 'include', // Ensures that credentials (such as cookies) are included
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        // Redirecting user to home page
+        window.location.href = '/index.html'; 
+    } catch (error) {
+        console.error('Error signing out:', error);
+    }
+}
+
+        document.getElementById('createTeamForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Preventing default form submission
+
+            const teamName = document.getElementById('teamName').value;
+            const maxMembers = document.getElementById('maxMembers').value;
+
+            createTeam(teamName, maxMembers);
+        });
+        
+
+        document.getElementById('updateTeamForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Preventing default form submission
+
+            const teamId = document.getElementById('teamUpdateId').value;
+            const updatedTeamName = document.getElementById('updatedTeamName').value;
+            const updatedMaxMembers = document.getElementById('updatedMaxMembers').value;
+
+            updateTeam(teamId, updatedTeamName, updatedMaxMembers);
+});
+
+
+        async function createTeam(teamName, maxMembers) {
+    try {
+        const response = await fetch('/api/teams', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include', // Ensure cookies are sent with the request
+            body: JSON.stringify({ teamName, maxMembers })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+         
+        alert(data.message || 'Team created successfully!');
+        refreshDataAndUI();
+    } catch (error) {
+        console.error('Error:', error);
+        alert(error, 'Failed to create team. Please try again.');
+    }
+}
+
+
+        async function updateTeam(currentTeamName, newTeamName, newMaxMembers) {
+    try {
+        const response = await fetch('/api/teams/updateTeam', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify({ currentTeamName, newTeamName, newMaxMembers: Number(newMaxMembers) })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        alert(data.message || 'Team updated successfully!');
+        refreshDataAndUI();
+    } catch (error) {
+        console.error('Error:', error);
+        alert(`${error}. Failed to update team. Please try again.`);
+        
+    }
+}
+document.getElementById('deleteTeamBtn').addEventListener('click', async () => {
+    const teamName = document.getElementById('teamUpdateId').value;
+
+    if (!teamName) {
+        alert('Please enter a team name.');
+        return;
+    }
+    const isUserSure = confirm('Are you sure you want to delete the team? This action cannot be undone.');
+    if (!isUserSure) {
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/teams', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ teamName }),
+            credentials: 'include',
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        alert(data.message || 'Team deleted successfully!');
+        refreshDataAndUI();
+    } catch (error) {
+        console.error('Error:', error);
+        alert(`Failed to delete team. Please try again.`);
+    }
+});
+
+async function fetchTeams() {
+    try {
+        // Fetch the team data from the server
+        const response = await fetch('/api/teams', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                // Add Authorization header if required
+                // 'Authorization': `Bearer ${YOUR_TOKEN}`
+            }
+        });
+
+        // Check if the response is not OK (status 200-299)
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        // Parse the response body to JSON
+        const teams = await response.json();
+
+        // Select the teamList element from the DOM
+        const teamListElement = document.getElementById('teamList');
+
+        // Ensure it's empty to begin with (in case you call fetchTeams() multiple times)
+        teamListElement.innerHTML = '';
+
+        // Loop through the fetched team data
+        teams.forEach(team => {
+            // Create a new list item for each team
+            const listItem = document.createElement('li');
+            listItem.textContent = team.teamName; // assuming the team object has a 'teamName' property
+
+            // Optionally: Add a button to each team allowing the user to join
+            const joinButton = document.createElement('button');
+            joinButton.textContent = 'Join';
+            joinButton.addEventListener('click', () => {
+                joinTeam(team.teamId); // assuming the team object has a 'teamId' property
+            });
+            listItem.appendChild(joinButton);
+
+            // Append the list item to the teamList element
+            teamListElement.appendChild(listItem);
+        });
+    } catch (error) {
+        // Handle errors, like showing an error message to the user
+        console.error('Failed to fetch teams:', error);
+        alert(error, 'Failed to fetch teams. Please try again later.');
+    }
+}
+async function joinTeam(teamId) {
+    try {
+        // Send a request to the server to join the specified team
+        const response = await fetch('/api/teams/join', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // Optionally: Add Authorization header if required
+                // 'Authorization': `Bearer ${YOUR_TOKEN}`
+            },
+            body: JSON.stringify({ teamId }) // Send the teamId in the request body
+        });
+
+        // Check if the response is not OK (status 200-299)
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        // Optionally: update the UI in some way to indicate that the user has joined the team
+        alert('Successfully joined the team!');
+        refreshDataAndUI();
+    } catch (error) {
+        // Handle errors, like showing an error message to the user
+        console.error('Failed to join team:', error);
+        alert('Failed to join team. Please try again later.');
+    }
+}
+async function fetchUsers() {
+    try {
+        const response = await fetch('/api/users', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                // Add Authorization header if needed
+            },
+        });
+
+        // Check if the response is not OK (status 200-299)
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const validUsers = data.users.filter(user => user && user.score != null);
+        validUsers.sort((a, b) => Number(b.score) - Number(a.score));
+        console.log(validUsers.map(user => user.score));
+        console.log(data.users); // You can log the users to the console
+
+        
+
+        // Get table body
+        const tableBody = document.querySelector("#usersTable tbody");
+
+        // Empty the table body to ensure no duplicate entries
+        tableBody.innerHTML = '';
+
+        tableBody.innerHTML = '';
+        ///clear the placeholder above
+
+        // Iterate through each user in the userData
+        validUsers.forEach((user, index) => {
+            // Insert a new row
+            const newRow = tableBody.insertRow();
+
+            const username = user.name ? user.name.split('@')[0] : 'N/A';
+
+
+            // Rank cell
+            const rankCell = newRow.insertCell();
+            rankCell.textContent = index + 1;
+
+            // Name cell
+            const nameCell = newRow.insertCell();
+            nameCell.textContent = username;
+
+            // Score cell
+            const scoreCell = newRow.insertCell();
+            scoreCell.textContent = user.score || 'N/A';
+
+            // Team cell
+            const teamCell = newRow.insertCell();
+            teamCell.textContent = user.teamName && user.ownedTeamName 
+                ? `${user.teamName}, ${user.ownedTeamName}` 
+                : user.teamName || user.ownedTeamName || 'N/A';         
+        });
+        //fix above when you have time. should not be made as one string, not neat with comma
+
+    } catch (error) {
+        console.error('Failed to fetch users:', error);
+        // Optionally: Update UI to indicate an error if desired
+    }
+}
+async function fetchAndDisplayTeams() {
+    try {
+        const res = await fetch('/api/teams', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                // Add Authorization header with JWT token
+            }
+        });
+
+        if (!res.ok) {
+            throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+
+        const teams = await res.json();
+
+        const teamsList = document.getElementById("teams-list");
+        teamsList.innerHTML = "";  // Clear previous list
+        
+        teams.forEach(team => {
+            const listItem = document.createElement("li");
+            const ownerName = team.ownerName.split('@')[0];
+
+
+            listItem.innerHTML = `
+                <h2>${team.teamName}</h2>
+                <p><strong>Owner:</strong> ${ownerName}</p>
+                <p><strong>Total Score:</strong> ${team.totalScore}</p>
+                <p><strong>Member Number:</strong> ${team.memberNumber}</p>
+                <p><strong>Available Member Number:</strong> ${team.availableMemberNumber}</p>
+                <button data-teamid="${team.teamId}" class="details-btn">Details</button>
+            `;
+            teamsList.appendChild(listItem);
+        });
+        document.querySelectorAll('.details-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        const teamId = this.getAttribute('data-teamid');
+        window.location.href = `/team-details.html?teamId=${teamId}`;
+    });
+});
+        
+    } catch (error) {
+        console.error('Error:', error);
+        alert("Failed to fetch teams. Please try again later.");
+    }
+}
+document.addEventListener('DOMContentLoaded', fetchUsers);
+document.addEventListener("DOMContentLoaded", fetchAndDisplayTeams);
+
+// Execute the function to fetch user data
+fetchUsers();
+fetchTeams();
+    </script>
+
+</body>
+
+</html>

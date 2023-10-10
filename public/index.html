@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Monitoring App</title>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+    <script>
+        var firebaseConfig = {
+        apiKey: "AIzaSyAhZtutEyfg_ZpaH5NsaEHVBZ2sAo0QNRc", ///this can be more secure than you think, it is actually how firebase does it. I know hard coding is usually a no
+        authDomain: "codechallenge-c1d90.firebaseapp.com",
+        projectId: "codechallenge-c1d90",
+        storageBucket: "codechallenge-c1d90.appspot.com",
+        messagingSenderId: "410864106146",
+        appId: "1:410864106146:web:533ecfde3eb29faea6b5fb",
+        measurementId: "G-2H108E5MHR"
+
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <style>
+        .input-field {
+            margin-bottom: 16px;
+        }
+        .note {
+            margin-bottom: 16px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Sign Up Section -->
+<h2>Sign Up</h2>
+<form id="signupForm">
+    <div class="input-field"></div>
+        <label for="signupEmail">Email:</label>
+        <input type="email" id="signupEmail" required>
+    </div>
+    <div class="input-field">
+    <p>Note: Everything before "@" in your email will be used as your display name.</p>
+        <label for="signupPassword">Password:</label>
+        <input type="password" id="signupPassword" required><br><br>
+    </div>
+    <button type="button" onclick="handleSignUp()">Sign Up</button>
+</form>
+
+<!-- Sign In Section -->
+<h2>Sign In</h2>
+<form id="signinForm">
+    <label for="signinEmail">Email:</label>
+    <input type="email" id="signinEmail" required><br><br>
+    
+    <label for="signinPassword">Password:</label>
+    <input type="password" id="signinPassword" required><br><br>
+    
+    <button type="button" onclick="handleSignIn()">Sign In</button>
+</form>
+
+<script>
+    async function handleSignUp() {
+        const email = document.getElementById('signupEmail').value;
+        const password = document.getElementById('signupPassword').value;
+
+        try {
+            ///when time make below more secure
+            const response = await fetch('http://localhost:3001/api/users/signup', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({email, password})
+            });
+
+            if (!response.ok) {
+                throw new Error('Sign-up failed');
+            }
+            
+            alert('Signed up successfully! Please sign in.');
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+    
+
+
+   
+
+    async function handleSignIn() {
+    try {
+        const email = document.getElementById('signinEmail').value;
+        const password = document.getElementById('signinPassword').value;
+        
+        // Authenticate with Firebase and get JWT
+        const user = await firebase.auth().signInWithEmailAndPassword(email, password);
+        const idToken = await user.user.getIdToken();
+        
+        // Send JWT to your server
+        const response = await fetch('http://localhost:3001/api/users/signin', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({idToken})
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            if(errorData.error && errorData.error.message === 'INVALID_LOGIN_CREDENTIALS') {
+                throw new Error('Invalid login credentials. Please try again.');
+            } else {
+                throw new Error('Sign-in failed on server');
+            }
+        }
+        const data = await response.json();  // Parse JSON data
+        window.location.href = "dashboard.html"; 
+    } catch (error) {
+        alert(error.message);
+    }
+}
+</script>
+
+</body>
+</html>
