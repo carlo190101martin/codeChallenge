@@ -92,7 +92,7 @@ npm install
   
 Run via CL: node src/index.js, then visit http://localhost:3001
 
-Test via CL: npm tets
+Test via CL: npm test
 
 Final note on production:
 
