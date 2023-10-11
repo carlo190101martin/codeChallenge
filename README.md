@@ -86,15 +86,15 @@ Prerequisites: Node.js, npm.
 
 ```
 git clone https://github.com/carlo190101martin/codeChallenge.git
+
+cd codeChallenge via CL ///in other words, the directory
 ```
-  
-1) cd codeChallenge via CL ///in other words, the directory
 
-2) npm install
+1) npm install
   
-3) Run via CL: node src/index.js, then visit http://localhost:3001
+2) Run via CL: node src/index.js, then visit http://localhost:3001
 
-4) Test via CL: npm test
+3) Test via CL: npm test
 
 
 Run on Docker:
@@ -102,7 +102,7 @@ Run on Docker:
 ```
 git clone https://github.com/carlo190101martin/codeChallenge.git
 
-cd codeChallenge
+cd codeChallenge ///in  other words the directory
 ```
 
 1) Configure docker-compose.yml:
