@@ -92,9 +92,9 @@ cd codeChallenge via CL ///in other words, the directory
 
 1) npm install
   
-2) Run via CL: node src/index.js, then visit http://localhost:3001
+2) Run via CL: ```node src/index.js```, then visit http://localhost:3001
 
-3) Test via CL: npm test
+3) Test via CL: ```npm test```
 
 
 Run on Docker:
@@ -112,7 +112,7 @@ cd codeChallenge ///in  other words the directory
 
 Please note again that having the firebase-service-account.json in this repo is to enable easy review of my project. This should otherwise never be included in a repo or shared.
 
-2) Run in CL: docker-compose up
+2) Run in CL: ```docker-compose up```
 
 
 Final note on production:
