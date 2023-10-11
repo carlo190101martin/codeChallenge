@@ -83,7 +83,7 @@ cd projectname via CL
 
 npm install
   
-Run via CL: npm start, then visit http://localhost:3001
+Run via CL: node src/index.js, then visit http://localhost:3001
 
 Test via CL: npm tets
   
