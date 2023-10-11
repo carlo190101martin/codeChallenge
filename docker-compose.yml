@@ -1,0 +1,12 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - "3001:3001"
+    environment:
+      secret: "///generate a key here"
+      FIREBASE_KEY_PATH: "/usr/src/app/secrets/codechallenge-c1d90-firebase-adminsdk-hwids-7db5f278bc.json"
+      API_URL: "http://localhost:3001"
+    volumes:
+      - /local volume of the firebase key
