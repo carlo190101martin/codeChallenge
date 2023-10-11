@@ -75,7 +75,6 @@ const crypto = require('crypto');
 
 const secret = crypto.randomBytes(64).toString('hex');
 console.log(secret);
-
 ```
 
 Then set the 'secret' in your .env file
