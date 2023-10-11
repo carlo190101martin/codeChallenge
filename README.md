@@ -120,7 +120,7 @@ Click on Details under Team Information. If you are the owner, there will be a r
 
 Final note on production:
 
-In production, MongoDB should probably be used instead of firebase for scalability.
+In production, MongoDB should probably be used instead of firebase for scalability. Swagger or a similar product should also be used for API documentation best practices.
   
   
   
