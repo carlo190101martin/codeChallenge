@@ -119,9 +119,9 @@ cd codeChallenge via CL ///in other words, the directory
 
 * npm install
   
-* Run via CL: ```node src/index.js```, then visit http://localhost:3001
+* Run via command line: ```node src/index.js```, then visit http://localhost:3001
 
-* Test via CL: ```npm test```
+* Test via command line: ```npm test```
 
 
 # **Run on Docker:**
@@ -129,7 +129,7 @@ cd codeChallenge via CL ///in other words, the directory
 ```
 git clone https://github.com/carlo190101martin/codeChallenge.git
 
-cd codeChallenge ///in  other words the directory
+cd codeChallenge ///in other words the directory
 ```
 
 * Configure docker-compose.yml:
@@ -139,7 +139,7 @@ cd codeChallenge ///in  other words the directory
 
 Please note again that having the firebase-service-account.json in this repo is to enable easy review of my project. This should otherwise never be included in a repo or shared.
 
-* Run in CL: ```docker-compose up```
+* Run in command line: ```docker-compose up```
 
 
 # **How to delete/reject a user as Team Owner:**
