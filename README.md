@@ -62,7 +62,7 @@ Create a .env file in your project root and set up the environment variables. Yo
 
 Under production circumstances, such credentials should never be included in a public repo or shared.
 
-These credentials are shared exceptionally for the review purposes of this code challenge. Firestore rules in production should also be improved for their current form.
+These credentials are shared exceptionally for the review purposes of this code challenge. This is to save the reviewers from having to create a firebase account/database. Firestore rules in production should also be improved for their current form.
 
 2) The API_URL points to the base URL of your backend API. For local development, you can set it as follows: API_URL="http://localhost:3001"
 
