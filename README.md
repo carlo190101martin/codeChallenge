@@ -76,7 +76,8 @@ Then set the 'secret' in your .env file
   
 Install:
   
-Prerequisites: Node.js, npm
+Prerequisites: Node.js, npm.
+
 git clone https://github.com/carlo190101martin/codeChallenge.git
   
 cd projectname via CL
