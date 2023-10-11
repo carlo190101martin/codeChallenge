@@ -114,6 +114,10 @@ Please note again that having the firebase-service-account.json in this repo is 
 2) Run in CL: ```docker-compose up```
 
 
+How to delete/reject a user as Team Owner:
+
+Click on Details under Team Information. If you are the owner, there will be a remove button next to users' names.
+
 Final note on production:
 
 In production, MongoDB should probably be used instead of firebase for scalability.
