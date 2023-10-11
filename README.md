@@ -4,9 +4,9 @@
 
 # **Endpoints**
 
-* Sign Out User
+* Sign Out User  
 
-Endpoint: /api/users/signout
+Endpoint: /api/users/signout  
 
 Method: POST
 
