@@ -112,7 +112,7 @@ cd codeChallenge ///in  other words the directory
 
 Please note again that having the firebase-service-account.json in this repo is to enable easy review of my project. This should otherwise never be included in a repo or shared.
 
-2) run in CL: docker-compose up
+2) Run in CL: docker-compose up
 
 
 Final note on production:
