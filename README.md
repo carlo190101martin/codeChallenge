@@ -70,7 +70,10 @@ These credentials are shared exceptionally for the review purposes of this code 
   
 You could generate a secure key in Node.js as follows:
 
-require('crypto').randomBytes(64).toString('hex')
+```const crypto = require('crypto');
+
+const secret = crypto.randomBytes(64).toString('hex');
+console.log(secret);```
 
 Then set the 'secret' in your .env file
   
