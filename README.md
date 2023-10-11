@@ -130,7 +130,7 @@ cd codeChallenge via CL ///in other words, the directory
 ```
 git clone https://github.com/carlo190101martin/codeChallenge.git
 
-cd codeChallenge ///in other words the directory
+cd codeChallenge ///in other words, the directory
 ```
 
 * Configure docker-compose.yml:
