@@ -1,6 +1,8 @@
-﻿API Documentation
+﻿# **API Documentation**
 
-Base URL: http://localhost:3001
+# **Base URL: http://localhost:3001**
+
+# **Endpoints**
 
 1) Sign Out User
 Endpoint: /api/users/signout
@@ -54,7 +56,7 @@ Method: POST
 
 Ensure to meticulously review the API endpoints to guarantee accurate and secure data interactions between client and server.
 
-Config:
+# **Configuration:**
 
 Create a .env file in your project root and set up the environment variables. You can find an example in the .env.sample file.
 
@@ -79,7 +81,7 @@ console.log(secret);
 
 Then set the 'secret' in your .env file
   
-Run on local machine:
+# **Run on local machine:**
   
 Prerequisites: Node.js, npm.
 
@@ -96,7 +98,7 @@ cd codeChallenge via CL ///in other words, the directory
 3) Test via CL: ```npm test```
 
 
-Run on Docker:
+# **Run on Docker:**
 
 ```
 git clone https://github.com/carlo190101martin/codeChallenge.git
@@ -114,11 +116,11 @@ Please note again that having the firebase-service-account.json in this repo is 
 2) Run in CL: ```docker-compose up```
 
 
-How to delete/reject a user as Team Owner:
+# **How to delete/reject a user as Team Owner:**
 
 Click on Details under Team Information. If you are the owner, there will be a remove button next to users' names.
 
-Final note on production:
+# **Final note on production:**
 
 In production, MongoDB should probably be used instead of firebase for scalability. Swagger or a similar product should also be used for API documentation best practices.
   
