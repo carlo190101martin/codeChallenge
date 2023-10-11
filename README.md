@@ -1,4 +1,4 @@
-API Documentation
+﻿API Documentation
 
 Base URL: http://localhost:3001
 
@@ -84,15 +84,36 @@ Install:
   
 Prerequisites: Node.js, npm.
 
+```
 git clone https://github.com/carlo190101martin/codeChallenge.git
+```
   
-cd projectname via CL
+1) cd codeChallenge via CL ///in other words, the directory
 
-npm install
+2) npm install
   
-Run via CL: node src/index.js, then visit http://localhost:3001
+3) Run via CL: node src/index.js, then visit http://localhost:3001
 
-Test via CL: npm test
+4) Test via CL: npm test
+
+
+Run on Docker:
+
+```
+git clone https://github.com/carlo190101martin/codeChallenge.git
+
+cd codeChallenge
+```
+
+1) Configure docker-compose.yml:
+
+    Edit the volume path to point to your firebase-service-account.json file directory on your local machine.
+    Add a secret key under the environment section. Please refer to point 3 in the env section of this documentation for details.
+
+Please note again that having the firebase-service-account.json in this repo is to enable easy review of my project. This should otherwise never be included in a repo or shared.
+
+2) run in CL: docker-compose up
+
 
 Final note on production:
 
