@@ -102,6 +102,7 @@ You could generate a secure key in Node.js as follows:
 const crypto = require('crypto');
 
 const secret = crypto.randomBytes(64).toString('hex');
+
 console.log(secret);
 ```
 
