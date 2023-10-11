@@ -6,81 +6,81 @@
 
 * Sign Out User  
 
-Endpoint: /api/users/signout  
+  Endpoint: /api/users/signout  
 
-Method: POST
+  Method: POST
 
 * Create a Team
 
-Endpoint: /api/teams
+  Endpoint: /api/teams
 
-Method: POST
+  Method: POST
 
 * Update a Team
 
-Endpoint: /api/teams/updateTeam
+  Endpoint: /api/teams/updateTeam
 
-Method: PATCH
+  Method: PATCH
 
 * Delete a Team
 
-Endpoint: /api/teams
+  Endpoint: /api/teams
 
-Method: DELETE
+  Method: DELETE
 
 * Fetch Teams
 
-Endpoint: /api/teams
+  Endpoint: /api/teams
 
-Method: GET
+  Method: GET
 
 * Join a Team
 
-Endpoint: /api/teams/join
+  Endpoint: /api/teams/join
 
-Method: POST
+  Method: POST
 
 * Fetch Users
 
-Endpoint: /api/users
+  Endpoint: /api/users
 
-Method: GET
+  Method: GET
 
 * Get Current User ID
 
-Endpoint: /api/users/current-user
+  Endpoint: /api/users/current-user
 
-Method: GET
+  Method: GET
 
 * Fetch Team Details (and Member Details)
 
-Endpoint 1: /api/teams/[teamId]
+  Endpoint 1: /api/teams/[teamId]
 
-Method: GET
+  Method: GET
 
-Endpoint 2: /api/users/[memberId]
+  Endpoint 2: /api/users/[memberId]
 
-Method: GET
+  Method: GET
 
 * Remove Member from Team
 
-Endpoint: /api/teams/[teamId]/remove-member
+  Endpoint: /api/teams/[teamId]/remove-member
 
-Method: POST
+  Method: POST
 
 * Sign Up User
 
-Endpoint: /api/users/signup
+  Endpoint: /api/users/signup
 
-Method: POST
+  Method: POST
 
 * Sign In User
 
-Endpoint: /api/users/signin
+  Endpoint: /api/users/signin
 
-Method: POST
+  Method: POST
 
-Ensure to meticulously review the API endpoints to guarantee accurate and secure data interactions between client and server.
+  Ensure to meticulously review the API endpoints to guarantee accurate and secure data interactions between client and server.
 
 # **Configuration:**
 
