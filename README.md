@@ -93,8 +93,10 @@ npm install
 Run via CL: node src/index.js, then visit http://localhost:3001
 
 Test via CL: npm tets
-  
-  
+
+Final note on production:
+
+In production, MongoDB should probably be used instead of firebase for scalability.
   
   
   
