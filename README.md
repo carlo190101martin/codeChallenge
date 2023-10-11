@@ -79,7 +79,7 @@ console.log(secret);
 
 Then set the 'secret' in your .env file
   
-Install:
+Run on local machine:
   
 Prerequisites: Node.js, npm.
 
