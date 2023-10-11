@@ -86,7 +86,7 @@
 
 Create a .env file in your project root and set up the environment variables. You can find an example in the .env.sample file.
 
-* Place the provided firebase-service-account.json in the root of the project directory (or a secure known path). Set the "FIREBASE_KEY_PATH' in your .env to point to this file.
+* The provided firebase-service-account.json should be in the root of the project directory (or can be placed in a secure known path). Set the "FIREBASE_KEY_PATH' in your .env to point to this .json file.
 
 Under production circumstances, such credentials should never be included in a public repo or shared.
 
@@ -135,7 +135,7 @@ cd codeChallenge ///in  other words the directory
 * Configure docker-compose.yml:
 
     Edit the volume path to point to your firebase-service-account.json file directory on your local machine.
-    Add a secret key under the environment section. Please refer to point 3 in the env section of this documentation for details.
+    Add a secret key under the environment section. Please refer to bullet 3 in the Configuration section of this documentation for details.
 
 Please note again that having the firebase-service-account.json in this repo is to enable easy review of my project. This should otherwise never be included in a repo or shared.
 
@@ -148,7 +148,7 @@ Click on Details under Team Information. If you are the owner, there will be a r
 
 # **Final note on production:**
 
-In production, MongoDB should probably be used instead of firebase for scalability. Swagger or a similar product should also be used for API documentation best practices.
+In production, MongoDB should probably be used instead of Firebase for scalability. Swagger or a similar product should also be used for API documentation best practices.
   
   
   
