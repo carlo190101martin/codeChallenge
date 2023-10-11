@@ -180,7 +180,7 @@
             headers: {
                 'Content-Type': 'application/json',
             },
-            credentials: 'include', // Ensure cookies are sent with the request
+            credentials: 'include', // ensure cookies are sent 
             body: JSON.stringify({ teamName, maxMembers })
         });
 
@@ -260,13 +260,13 @@ document.getElementById('deleteTeamBtn').addEventListener('click', async () => {
 
 async function fetchTeams() {
     try {
-        // Fetch the team data from the server
+        // fetch the team data from server
         const response = await fetch('/api/teams', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                // Add Authorization header if required
-                // 'Authorization': `Bearer ${YOUR_TOKEN}`
+                
+                
             }
         });
 
@@ -314,8 +314,8 @@ async function joinTeam(teamId) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                // Optionally: Add Authorization header if required
-                // 'Authorization': `Bearer ${YOUR_TOKEN}`
+                
+                
             },
             body: JSON.stringify({ teamId }) // Send the teamId in the request body
         });
@@ -340,11 +340,11 @@ async function fetchUsers() {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                // Add Authorization header if needed
+               
             },
         });
 
-        // Check if the response is not OK (status 200-299)
+        // Check if the response is not OK 
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -405,7 +405,7 @@ async function fetchAndDisplayTeams() {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                // Add Authorization header with JWT token
+               
             }
         });
 

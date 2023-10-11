@@ -33,7 +33,7 @@ async function createTeam(req, res, next) {
   
       await db.collection('users').doc(req.user.uid).update({
         team: admin.firestore.FieldValue.arrayUnion(teamId)
-  // Using the team id from the created team document
+  // using the team id from the created team document
       });
   
       res.status(201).json({ message: 'Team created successfully', teamId });
@@ -51,14 +51,14 @@ async function createTeam(req, res, next) {
             return res.status(400).json({ error: 'Invalid team name' });
         }
 
-        // Find the team with the current name
+        // find the team with the current name
         const teamQuerySnapshot = await db.collection('teams').where('teamName', '==', teamName).get();
 
         if(teamQuerySnapshot.empty) {
             return res.status(404).json({ error: 'Team not found' });
         }
 
-        // Assumes team names are unique. If they are not, additional checks are needed.
+        // assumes team names are unique. If they are not, additional checks are needed.
         const teamDocRef = teamQuerySnapshot.docs[0].ref;
         
         // Check if the requester is the owner of the team
@@ -102,7 +102,7 @@ const updateTeam = async (req, res) => {
             });
         }
 
-        // Assumes team names are unique. If they are not, additional checks are needed.
+        // Assumes team names are unique. If they are not, additional checks  needed.
         const teamDocRef = teamQuerySnapshot.docs[0].ref;
         
         // Check if the requester is the owner of the team
@@ -111,7 +111,7 @@ const updateTeam = async (req, res) => {
             return res.status(403).json({ error: 'User is not the team owner' });
         }
 
-        // Update the team name and maximum members in the database
+        // Update the team name and maximum members 
         await teamDocRef.update({
             teamName: newTeamName,
             maxMembers: newMaxMembers,

@@ -54,6 +54,54 @@ Method: POST
 
 Ensure to meticulously review the API endpoints to guarantee accurate and secure data interactions between client and server.
 
+Config:
+
+Create a .env file in your project root and set up the environment variables. You can find an example in the .env.sample file.
+
+1) Place the provided firebase-service-account.json in the root of the project directory (or a secure known path). Set the "FIREBASE_KEY_PATH' in your .env to point to this file.
+
+Under production circumstances, such credentials should never be included in a public repo or shared.
+
+These credentials are shared exceptionally for the review purposes of this code challenge. Otherwise a new firebase account and project would have to be created. Firestore rules in production should also be improved for their current form.
+
+2) The API_URL points to the base URL of your backend API. For local development, you can set it as follows: API_URL="http://localhost:3001"
+
+3) Generate a secure, random string to be used as your JWT secret key.
+  
+You could generate a secure key in Node.js as follows:
+
+require('crypto').randomBytes(64).toString('hex')
+
+Then set the 'secret' in your .env file
+  
+Install:
+  
+Prerequisites: Node.js, npm
+git clone https://github.com/carlo190101martin/codeChallenge.git
+  
+cd projectname via CL
+
+npm install
+  
+Run via CL: npm start, then visit http://localhost:3001
+
+Test via CL: npm tets
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+   
+   
+
+
+
 
 
 
